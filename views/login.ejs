@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>简易客户管理系统v1.0.0</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				font-size: 14px;
+				font-family: "微软雅黑";
+			}
+			.login{
+				width: 350px;
+				height: 125px;
+				border: solid 1px #eee;
+				border-radius:3px;
+				box-shadow: black 3px 2px 10px;
+				position: absolute;
+				left:calc(50% - 175px);
+				top:calc(50% - 75px);
+				padding-top:25px;
+			}
+			.login p{
+				height: 35px;
+				line-height: 35px;
+			}
+			.login label{
+				float: left;
+				width: 100px;
+				text-align: right;
+				height: 35px;
+				padding-right: 3px;
+			}
+			.login p span{
+				float: left;
+				height: 35px;
+			}
+
+			.login p span input
+			{
+				height:20px;
+			}
+			#btnlogin{
+				width: 80px;
+				height: 24px;
+				text-align: center;
+				margin-left: 103px;
+			}
+			#errorMsg{
+				color:red;
+				width: 150px;
+				font-size: 12px;
+				padding-left: 5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div class="login">
+		<p><label>用户名:</label><span><input type="text" name="username" class="logininput" placeholder=""/></span></p>
+		<p><label>密    码:</label><span><input type="password" name="password" class="logininput" placeholder=""/></span></p>
+		<p><span><input type="button" id="btnlogin" value="登录" /></span><span id="errorMsg"></span></p>
+	</div>
+    <script type="text/javascript" src="/javascripts/jquery-1.11.2.js"></script>
+	<script type="text/javascript">
+		$("#btnlogin").click(function(){
+			var username=$("input[name='username']").val();
+			var password=$("input[name='password']").val();
+			//随机数为了避免缓存，每次的地址都不一致。使用jquery中的post方法，传递的参数数据是name，password
+			$.post("/login/?"+Math.random(),{"username":username,"password":password},function(res){
+				if(res=="ok")
+				{
+					location.href="/main/";
+				}
+				else
+				{
+					$("#errorMsg").text("登录失败，用户或密码错误!");
+				}
+			});
+		});
+	</script>
+	</body>
+</html>
